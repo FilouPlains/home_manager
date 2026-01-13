@@ -2,12 +2,11 @@
   config,
   lib,
   pkgs,
-  osConfig,
   ...
 }: let
   path = /etc/nixos;
 
-  stylix = osConfig.lib.stylix.colors;
+  stylix = config.lib.stylix.colors;
   getRgb = canal: builtins.getAttr "base03-rgb-${canal}" stylix;
   # For the `printf` command. We have bold > RGB > transience prompt > reset.
   transiencePrompt = builtins.concatStringsSep "" [
@@ -24,7 +23,7 @@ in {
 
   config = {
     programs.fish = {
-      enable = !builtins.elem "fish" osConfig.disabledPackage or true;
+      enable = true;
 
       # Everything that should be launch with the terminal.
       interactiveShellInit =
@@ -68,7 +67,6 @@ in {
 
         # U
         update = "nh os switch -- --impure";
-        update-old = "nixos-rebuild switch --upgrade --impure --flake /etc/nixos/#${osConfig.networking.hostName}";
 
         # V
         v = "nvim";

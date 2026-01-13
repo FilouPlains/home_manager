@@ -2,11 +2,10 @@
   config,
   lib,
   pkgs,
-  osConfig,
   ...
 }: {
   programs.keychain = {
-    enable = !builtins.elem "keychain" osConfig.disabledPackage or true;
+    enable = true;
 
     keys = [
       "github_id_rsa"

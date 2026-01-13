@@ -2,13 +2,12 @@
   config,
   lib,
   pkgs,
-  osConfig,
   ...
 }: let
-  stylix = osConfig.lib.stylix.colors;
+  stylix = config.lib.stylix.colors;
 in {
   programs.starship = {
-    enable = !builtins.elem "starship" osConfig.disabledPackage or true;
+    enable = true;
 
     # Configuration written in `~/.config/starship.toml`.
     settings = {

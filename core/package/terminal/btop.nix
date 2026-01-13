@@ -2,11 +2,10 @@
   config,
   lib,
   pkgs,
-  osConfig,
   ...
 }: {
   programs.btop = {
-    enable = !builtins.elem "btop" osConfig.disabledPackage or true;
+    enable = true;
 
     settings = {
       theme_background = false;

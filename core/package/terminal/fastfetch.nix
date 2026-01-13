@@ -2,11 +2,10 @@
   config,
   lib,
   pkgs,
-  osConfig,
   ...
 }: let
   path = /etc/nixos/core/image;
-  enable = !builtins.elem "fastfetch" osConfig.disabledPackage or true;
+  enable = true;
 in {
   config = lib.mkIf enable {
     xdg.configFile."fastfetch/config.jsonc".text =

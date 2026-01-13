@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  osConfig,
   ...
 }: let
   colour = config.stylix.base16Scheme;
@@ -41,7 +40,7 @@ in {
   stylix.targets.kitty.enable = false;
 
   programs.kitty = {
-    enable = !builtins.elem "kitty" osConfig.disabledPackage or true;
+    enable = true;
 
     settings = {
       # ===========
