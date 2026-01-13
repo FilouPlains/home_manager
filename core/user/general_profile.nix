@@ -25,7 +25,9 @@
 
     packages = with pkgs; [
       bat
+      dysk
       fastfetch
+      g
       grc
     ];
   };
