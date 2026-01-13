@@ -6,7 +6,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -17,6 +17,7 @@
   };
 
   outputs = {
+    self,
     nixpkgs,
     home-manager,
     stylix,
@@ -29,6 +30,7 @@
           stylix.homeModules.stylix
           ./core/user/lucas.rouaud/lucas.rouaud.nix
           ./core/stylix.nix
+          {_module.args.self = self;}
         ];
       };
 
@@ -36,8 +38,9 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         modules = [
           stylix.homeModules.stylix
-          ./core/user/lucas.rouaud/lucas.rouaud.nix
+          ./core/user/rouaud/rouaud.nix
           ./core/stylix.nix
+          {_module.args.self = self;}
         ];
       };
 
@@ -47,6 +50,7 @@
           stylix.homeModules.stylix
           ./core/user/root/root.nix
           ./core/stylix.nix
+          {_module.args.self = self;}
         ];
       };
     };

@@ -1,10 +1,10 @@
 {
+  self,
   config,
   lib,
   pkgs,
   ...
 }: let
-  path = /etc/nixos/core/image;
   enable = true;
 in {
   config = lib.mkIf enable {
@@ -83,6 +83,6 @@ in {
       }
       |> builtins.replaceStrings ["\\\\"] ["\\"];
 
-    xdg.configFile."fastfetch/logo_nix_white.png".source = "${path}/logo_nix_white.png";
+    xdg.configFile."fastfetch/logo_nix_white.png".source = "${self}/core/image/logo_nix_white.png";
   };
 }

@@ -1,6 +1,4 @@
-{pkgs, ...}: let
-  path = ./core/image;
-in {
+{pkgs, ...}: {
   # Colour theme.
   stylix.base16Scheme = {
     name = "nord";
@@ -28,7 +26,7 @@ in {
   stylix.polarity = "dark";
 
   # Mandatory, even if not used…
-  stylix.image = "${path}/wallpaper.png";
+  stylix.image = ./image/wallpaper.png;
 
   # Specify default fonts.
   stylix.fonts = {
