@@ -14,15 +14,26 @@
       url = "github:nix-community/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
-    nixpkgs,
     home-manager,
+    nixgl,
+    nixpkgs,
     stylix,
     ...
-  }: {
+  }: let
+    pkgs = import nixpkgs {
+      system = "x86_64-linux";
+      overlays = [nixgl.overlay];
+    };
+  in {
     homeConfigurations = {
       "lucas.rouaud" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
