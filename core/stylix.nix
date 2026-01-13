@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  path = /etc/nixos/core/image;
+  path = ./core/image;
 in {
   # Colour theme.
   stylix.base16Scheme = {
