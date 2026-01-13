@@ -23,6 +23,11 @@
         modules = [./core/user/lucas.rouaud/lucas.rouaud.nix];
       };
 
+      "rouaud" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        modules = [./core/user/lucas.rouaud/lucas.rouaud.nix];
+      };
+
       "root" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         modules = [./core/user/root/root.nix];
