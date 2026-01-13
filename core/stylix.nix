@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, self, ...}: {
   # Colour theme.
   stylix.base16Scheme = {
     name = "nord";
@@ -26,7 +26,7 @@
   stylix.polarity = "dark";
 
   # Mandatory, even if not used…
-  stylix.image = ./image/wallpaper.png;
+  stylix.image = "${self}/core/image/wallpaper.png";
 
   # Specify default fonts.
   stylix.fonts = {
