@@ -27,7 +27,7 @@
       bat
       dysk
       fastfetch
-      g
+      g-ls
       grc
     ];
   };
