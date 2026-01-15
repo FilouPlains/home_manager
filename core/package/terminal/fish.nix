@@ -41,6 +41,15 @@ in {
               # Enable zoxide.
               zoxide init fish --cmd cd | source
           end
+
+          # Initialize micromamba for fish.
+          if test -d $HOME/miniconda3
+            set --global --export MAMBA_ROOT_PREFIX $HOME/miniconda3
+          end
+
+          if type -q micromamba
+            micromamba shell hook -s fish | source
+          end
         '';
 
       shellInitLast =

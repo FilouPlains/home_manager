@@ -15,6 +15,7 @@
       EDITOR = "nvim";
 
       # M
+      MAMBA_EXE = "${pkgs.micromamba}/bin/micromamba";
       MANROFFOPT = "-P -c";
       MANPAGER = "nvimpager";
 
@@ -29,6 +30,8 @@
       fastfetch
       g-ls
       grc
+      micromamba
+      nvimpager
     ];
   };
 
