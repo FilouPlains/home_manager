@@ -35,20 +35,20 @@ in {
           set fish_greeting
 
           if status is-interactive
-            # Picture showing.
-            fastfetch
+              # Picture showing.
+              fastfetch
 
-            # Enable zoxide.
-            zoxide init fish --cmd cd | source
+              # Enable zoxide.
+              zoxide init fish --cmd cd | source
 
-            # Initialize micromamba for fish.
-            if test -d $HOME/miniconda3
-              set --global --export MAMBA_ROOT_PREFIX $HOME/miniconda3
-            end
+              # Initialize micromamba for fish.
+              if test -d $HOME/miniconda3
+                set --global --export MAMBA_ROOT_PREFIX $HOME/miniconda3
+              end
 
-            if type -q micromamba
-              micromamba shell hook -s fish | source
-            end
+              if type -q micromamba
+                micromamba shell hook -s fish | source
+              end
           end
         '';
 
@@ -117,7 +117,10 @@ in {
                       --foreground "#${stylix.base06}" \
                       --background "#${stylix.base08}" \
                       --padding "1 1" \
+                      --margin "0 1" \
                       " SSH connexion detected!"
+
+                  echo ""
               end
 
               if ${pkgs.gum}/bin/gum confirm "$__operation_name computer \"$(hostname)\"?" \
@@ -126,8 +129,8 @@ in {
                   --prompt.foreground="#${stylix.base06}"\
                   --selected.foreground="#${stylix.base06}" \
                   --selected.background="#${stylix.base09}" \
-                  --unselected.foreground="#${stylix.base03}" \
-                  --unselected.background="#${stylix.base08}"
+                  --unselected.foreground="#${stylix.base06}" \
+                  --unselected.background="#${stylix.base03}"
 
                   $__operation || echo "Trying again with \"sudo\""; sudo $__operation
               else
@@ -186,6 +189,21 @@ in {
           description = "Create a directory and go inside it";
         };
 
+        # O
+        off = {
+          body =
+            /*
+            fish
+            */
+            ''
+              set --export __operation_name "Shutdown"
+              set --export __operation shutdown --poweroff now
+
+              __computer_state
+            '';
+          description = "Shutdown computer.";
+        };
+
         # R
         reboot = {
           body =
@@ -193,8 +211,8 @@ in {
             fish
             */
             ''
-              set __operation_name "Reboot"
-              set __operation reboot
+              set --export __operation_name "Reboot"
+              set --export __operation reboot
 
               __computer_state
             '';
@@ -244,20 +262,6 @@ in {
               set --erase __current_volume
             '';
           description = "Shift left and right audio.";
-        };
-
-        shutdown = {
-          body =
-            /*
-            fish
-            */
-            ''
-              set __operation_name "Shutdown"
-              set __operation shutdown --poweroff now
-
-              __computer_state
-            '';
-          description = "Shutdown computer.";
         };
 
         starship_transient_prompt_func = {
