@@ -96,9 +96,6 @@ in {
         ll = "g --all --title --dir-first --sort name --git --time-style=long-iso";
         ls = "g --icons --dir-first --sort name";
 
-        # O
-        off = "shutdown --poweroff now";
-
         # T
         t = "g --tree --icons --size";
         table = "g --statistic --all --table --table-style=unicode --title --relative-time --dir-first --sort name --git --time-style=long-iso";
@@ -108,6 +105,38 @@ in {
 
       # Define functions here.
       functions = {
+        ##
+        __computer_state = {
+          body =
+            /*
+            fish
+            */
+            ''
+              if set -q SSH_CLIENT; or set -q SSH_TTY
+                  gum style \
+                      --foreground "#${stylix.base06}" \
+                      --background "#${stylix.base08}" \
+                      --padding "1 1" \
+                      " SSH connexion detected!"
+              end
+
+              if gum confirm "$__operation_name computer \"$(hostname)\"?" \
+                  --default=false \
+                  --timeout=30s  \
+                  --prompt.foreground="#${stylix.base06}"\
+                  --selected.foreground="#${stylix.base06}" \
+                  --selected.background="#${stylix.base09}" \
+                  --unselected.foreground="#${stylix.base03}" \
+                  --unselected.background="#${stylix.base08}"
+
+                  $__operation || echo "Trying again with \"sudo\""; sudo $__operation
+              else
+                echo "Operation aborded."
+              end
+            '';
+          description = "General function to reboot or shutdown the computer.";
+        };
+
         # C
         cat = {
           body =
@@ -157,6 +186,21 @@ in {
           description = "Create a directory and go inside it";
         };
 
+        # R
+        reboot = {
+          body =
+            /*
+            fish
+            */
+            ''
+              set __operation_name "Reboot"
+              set __operation reboot
+
+              __computer_state
+            '';
+          description = "Reboot computer.";
+        };
+
         # S
         shift-audio = lib.mkIf config.shiftAudio.enable {
           body =
@@ -200,6 +244,20 @@ in {
               set --erase __current_volume
             '';
           description = "Shift left and right audio.";
+        };
+
+        shutdown = {
+          body =
+            /*
+            fish
+            */
+            ''
+              set __operation_name "Shutdown"
+              set __operation shutdown --poweroff now
+
+              __computer_state
+            '';
+          description = "Shutdown computer.";
         };
 
         starship_transient_prompt_func = {
