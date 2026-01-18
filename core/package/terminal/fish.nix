@@ -4,10 +4,10 @@
   pkgs,
   ...
 }: let
-  path = /etc/nixos;
-
   stylix = config.lib.stylix.colors;
+
   getRgb = canal: builtins.getAttr "base03-rgb-${canal}" stylix;
+
   # For the `printf` command. We have bold > RGB > transience prompt > reset.
   transiencePrompt = builtins.concatStringsSep "" [
     "\\e[1m\\e[38;2;"
@@ -35,20 +35,20 @@ in {
           set fish_greeting
 
           if status is-interactive
-              # Picture showing.
-              fastfetch
+            # Picture showing.
+            fastfetch
 
-              # Enable zoxide.
-              zoxide init fish --cmd cd | source
-          end
+            # Enable zoxide.
+            zoxide init fish --cmd cd | source
 
-          # Initialize micromamba for fish.
-          if test -d $HOME/miniconda3
-            set --global --export MAMBA_ROOT_PREFIX $HOME/miniconda3
-          end
+            # Initialize micromamba for fish.
+            if test -d $HOME/miniconda3
+              set --global --export MAMBA_ROOT_PREFIX $HOME/miniconda3
+            end
 
-          if type -q micromamba
-            micromamba shell hook -s fish | source
+            if type -q micromamba
+              micromamba shell hook -s fish | source
+            end
           end
         '';
 
@@ -152,7 +152,7 @@ in {
                   if test $status -eq 0
                       kitten icat --hold $path
                   else
-                      bat --paging always $path
+                      ${pkgs.bat}/bin/bat --paging always $path
                   end
               else
                   for subpath in $(find $path -maxdepth 0)
@@ -165,7 +165,7 @@ in {
                       if test $status -eq 0
                           kitten icat $subpath
                       else
-                          bat --paging never $subpath
+                          ${pkgs.bat}/bin/bat --paging never $subpath
                       end
                   end
               end
