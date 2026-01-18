@@ -113,14 +113,14 @@ in {
             */
             ''
               if set -q SSH_CLIENT; or set -q SSH_TTY
-                  gum style \
+                  ${pkgs.gum}/bin/gum style \
                       --foreground "#${stylix.base06}" \
                       --background "#${stylix.base08}" \
                       --padding "1 1" \
                       " SSH connexion detected!"
               end
 
-              if gum confirm "$__operation_name computer \"$(hostname)\"?" \
+              if ${pkgs.gum}/bin/gum confirm "$__operation_name computer \"$(hostname)\"?" \
                   --default=false \
                   --timeout=30s  \
                   --prompt.foreground="#${stylix.base06}"\

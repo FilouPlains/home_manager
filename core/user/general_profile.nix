@@ -29,6 +29,7 @@
       dysk
       fastfetch
       g-ls
+      gum
       grc
       micromamba
       nvimpager
