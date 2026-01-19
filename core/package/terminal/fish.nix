@@ -209,7 +209,7 @@ in {
             */
             ''
               set --export __operation_name "Shutdown"
-              set --export __operation shutdown --poweroff now
+              set --export __operation ${pkgs.systemdMinimal}/bin/shutdown --poweroff now
 
               __computer_state
             '';
@@ -224,7 +224,7 @@ in {
             */
             ''
               set --export __operation_name "Reboot"
-              set --export __operation reboot
+              set --export __operation ${pkgs.systemdMinimal}/bin/reboot
 
               __computer_state
             '';

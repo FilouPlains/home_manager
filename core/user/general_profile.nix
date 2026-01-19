@@ -33,6 +33,7 @@
       grc
       micromamba
       nvimpager
+      systemdMinimal
     ];
   };
 
