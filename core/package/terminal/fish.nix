@@ -132,10 +132,22 @@ in {
                   --unselected.foreground="#${stylix.base06}" \
                   --unselected.background="#${stylix.base03}"
 
-                  $__operation || echo "Trying again with \"sudo\""; sudo $__operation
+                  # Normal operation.
+                  $__operation \
+                      || echo "Trying again with \"sudo\"" \
+                      && return 0
+
+                  # Retrying with `sudo`.
+                  sudo $__operation \
+                      || echo "Operation with \"sudo\" failed" \
+                      && return 0
+
+                  return 1
               else
                 echo "Operation aborded."
               end
+
+              return 0
             '';
           description = "General function to reboot or shutdown the computer.";
         };
