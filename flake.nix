@@ -19,6 +19,11 @@
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -27,43 +32,50 @@
     nixgl,
     nixpkgs,
     stylix,
+    flake-utils,
     ...
-  }: let
-    pkgs = import nixpkgs {
-      system = "x86_64-linux";
-      overlays = [nixgl.overlay];
-    };
-  in {
-    homeConfigurations = {
-      "lucas.rouaud" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        modules = [
-          stylix.homeModules.stylix
-          ./core/user/lucas.rouaud/lucas.rouaud.nix
-          ./core/stylix.nix
-          {_module.args.self = self;}
-        ];
-      };
+  }:
+    flake-utils.lib.eachDefaultSystem (
+      system: let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [nixgl.overlay];
+          allowUnfree = true;
+        };
+      in {
+        legacyPackages = {
+          homeConfigurations = {
+            "lucas.rouaud" = home-manager.lib.homeManagerConfiguration {
+              inherit pkgs;
+              modules = [
+                stylix.homeModules.stylix
+                ./core/user/lucas.rouaud/lucas.rouaud.nix
+                ./core/stylix.nix
+                {_module.args.self = self;}
+              ];
+            };
 
-      "rouaud" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        modules = [
-          stylix.homeModules.stylix
-          ./core/user/rouaud/rouaud.nix
-          ./core/stylix.nix
-          {_module.args.self = self;}
-        ];
-      };
+            "rouaud" = home-manager.lib.homeManagerConfiguration {
+              inherit pkgs;
+              modules = [
+                stylix.homeModules.stylix
+                ./core/user/rouaud/rouaud.nix
+                ./core/stylix.nix
+                {_module.args.self = self;}
+              ];
+            };
 
-      "root" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        modules = [
-          stylix.homeModules.stylix
-          ./core/user/root/root.nix
-          ./core/stylix.nix
-          {_module.args.self = self;}
-        ];
-      };
-    };
-  };
+            "root" = home-manager.lib.homeManagerConfiguration {
+              inherit pkgs;
+              modules = [
+                stylix.homeModules.stylix
+                ./core/user/root/root.nix
+                ./core/stylix.nix
+                {_module.args.self = self;}
+              ];
+            };
+          };
+        };
+      }
+    );
 }
