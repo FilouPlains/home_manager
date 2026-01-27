@@ -19,6 +19,9 @@
       MANROFFOPT = "-P -c";
       MANPAGER = "nvimpager";
 
+      # N
+      NIXPKGS_ALLOW_UNFREE = 1;
+
       # P
       PAGER = "nvimpager";
       PYTHONPYCACHEPREFIX = "$HOME/.cache/cpython/";
