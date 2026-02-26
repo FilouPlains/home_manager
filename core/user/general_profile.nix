@@ -31,6 +31,7 @@
       bat
       dysk
       fastfetch
+      firefox
       g-ls
       gum
       grc
