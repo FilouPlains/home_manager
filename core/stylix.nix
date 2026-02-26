@@ -26,7 +26,7 @@
   stylix.polarity = "dark";
 
   # Mandatory, even if not used…
-  stylix.image = "${self}/core/image/wallpaper.png";
+  stylix.image = "${self}/img/wallpaper.png";
 
   # Specify default fonts.
   stylix.fonts = {

@@ -1,11 +1,9 @@
 {
-  description = "Home Manager configuration";
+  description = "Home Manager configuration.";
 
   inputs = {
     # Increment release branch for NixOS
-    nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-25.11";
-    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
@@ -22,20 +20,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-utils = {
-      url = "github:numtide/flake-utils";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
     };
+
+    import-tree.url = "github:vic/import-tree";
   };
 
-  outputs = {
-    self,
-    home-manager,
-    nixgl,
-    nixpkgs,
-    stylix,
-    flake-utils,
-    ...
-  }:
+  outputs = {flake-parts, ...} @ inputs:
+    flake-parts.lib.mkFlake {inherit inputs;}
+    (inputs.import-tree ./core);
+}
+
+/*
     flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = import nixpkgs {
@@ -80,3 +78,5 @@
       }
     );
 }
+*/
+

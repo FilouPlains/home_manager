@@ -1,7 +1,5 @@
 {
   config,
-  lib,
-  pkgs,
   ...
 }: let
   colour = config.stylix.base16Scheme;

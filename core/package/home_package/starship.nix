@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{config, ...}: let
   stylix = config.lib.stylix.colors;
 in {
   programs.starship = {
